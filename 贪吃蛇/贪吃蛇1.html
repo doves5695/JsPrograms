@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇小游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+        }
+        .game-area {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            border: 20px solid darkorange;
+            background-color:lightgreen;
+            margin: 20px auto;
+        }
+        .game-area button {
+            cursor: pointer;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+        }
+        .beginBtn {
+            width: 200px;
+            height: 80px;
+            background: url(../贪吃蛇/img/begingame.jpg) center/contain no-repeat;
+            border-radius: 50px;
+            margin-left: -100px;
+            margin-top: -40px;
+            display: block;
+        }
+        .pauseBtn {
+            width: 70px;
+            height: 70px;
+            background: url(../贪吃蛇/img/pause.jpg) center/contain no-repeat;
+            border-radius: 50px;
+            margin-left: -35px;
+            margin: top -35px;
+            display: none;
+        }
+        .btn {
+            position: absolute;
+            display: inline-block;
+            width: 70px;
+            height: 70px;
+            background: url(../贪吃蛇/img/start.jpg) center/contain no-repeat;
+            top: 20px;
+            left: 360px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        </style>
+</head>
+<div class="game-area">
+    <button class="beginBtn"></button>
+    <button class="pauseBtn"></button>
+</div>
+<body>
+    <script src="../贪吃蛇/config.js"></script>
+    <script src="../贪吃蛇/index.js"></script>
+</body>
+</html>
