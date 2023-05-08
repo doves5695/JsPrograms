@@ -77,12 +77,12 @@ window.onload = function () {
                 var left = event.clientX - smallPic.getBoundingClientRect().left - maskDiv.offsetWidth / 2;
                 var top = event.clientY - smallPic.getBoundingClientRect().top - maskDiv.offsetHeight / 2;
                 // 判断
-                if(left < 0) {
+                if (left < 0) {
                     left = 0;
                 } else if (left > smallPic.clientWidth - maskDiv.offsetWidth) {
                     left = smallPic.clientWidth - maskDiv.offsetWidth;
                 }
-                if(top < 0) {
+                if (top < 0) {
                     top = 0;
                 } else if (top > smallPic.clientHeight - maskDiv.offsetHeight) {
                     top = smallPic.clientHeight - maskDiv.offsetHeight
@@ -99,7 +99,7 @@ window.onload = function () {
                 // console.log(scale); 0.495
 
                 BigImg.style.left = -left / scale + 'px';
-                BigImg.style.top= -top / scale + 'px';
+                BigImg.style.top = -top / scale + 'px';
             }
 
             // 设置移出事件
@@ -124,10 +124,10 @@ window.onload = function () {
         console.log(imagessrc);
 
         // 3.遍历数组
-        for(var i = 0; i < imagessrc.length; i ++) {
+        for (var i = 0; i < imagessrc.length; i++) {
             // 4.创建li元素
             var newli = document.createElement('li');
-            
+
             // 5.创建img元素
             var newImg = document.createElement('img');
             newImg.src = imagessrc[i].s;
@@ -154,13 +154,125 @@ window.onload = function () {
         smallPic_img.src = imagessrc[0].s;
 
         // 2.循环点击li元素
-        for(let i = 0; i < liNodes.length; i ++) {
+        for (let i = 0; i < liNodes.length; i++) {
             liNodes[i].onclick = function () {
                 BigImgIndex = i;
 
                 // 变换小图路径
                 smallPic_img.src = imagessrc[i].s;
             }
-        } 
+        }
+    }
+
+    // 点击缩略图左右箭头的效果
+    thumbnailLeftRightClick();
+    function thumbnailLeftRightClick() {
+
+        // 先获取左右两端的箭头按钮
+        var prev = document.querySelector('#wrapper #content .contentMain #center #left #leftBottom a.prev')
+        var next = document.querySelector('#wrapper #content .contentMain #center #left #leftBottom a.next')
+
+        // 再获取可视的div以及ul元素和所有的li元素
+        var ul = document.querySelector('#wrapper #content .contentMain #center #left #leftBottom #piclist ul')
+        var liNodes = document.querySelectorAll('#wrapper #content .contentMain #center #left #leftBottom #piclist ul li')
+
+        // 计算(发起点, 每次走的长度, 总体运动的距离值)
+        // 发起点
+        var start = 0;
+        // 每次走的长度
+        var step = (liNodes[0].offsetWidth + 20) * 2;
+        // 总体运动的距离值 = ul宽度-div宽度(图片总数-div中显示的数量) * (li的宽度+20)
+        var endPostion = (liNodes.length - 5) * (liNodes[0].offsetWidth + 20)
+
+        // 然后发生点击事件
+        prev.onclick = function () {
+            start -= step
+            if (start < 0) {
+                start = 0
+            }
+            ul.style.left = -start + "px";
+        }
+        next.onclick = function () {
+            start += step;
+            if (start > endPostion) {
+                start = endPostion;
+            }
+            ul.style.left = -start + "px";
+        }
+    }
+
+    // 商品详情数据的动态渲染
+    rightTopData();
+    function rightTopData() {
+        // 查找元素
+        var rightTop = document.querySelector('#wrapper #content .contentMain #center .right .rightTop');
+
+        // 查找数据
+        var goodsDetail = goodData.goodsDetail
+
+        // 创建一个字符串变量
+        // 模版字符串替换数据: ${变量}
+        var s = `<h3>${goodsDetail.title}</h3>
+        <p>${goodsDetail.recommend}</p>
+        <div class="priceWrap">
+            <div class="priceTop">
+                <span>价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格</span>
+                    <div class="price">
+                        <span>￥</span>
+                        <p>${goodsDetail.price}</p>
+                        <i>降价通知</i>
+                    </div>
+                    <p>
+                        <span>累计评价</span>
+                        <span>670000</span>
+                    </p>
+            </div>
+            <div class="priceBottom">
+                <span>促&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;销</span>
+                <p>
+                   <span>${goodsDetail.promoteSales.type}</span>
+                   <span>${goodsDetail.promoteSales.content}</span>
+                </p>
+            </div>
+        </div>
+        <div class="support">
+            <span>支&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;持</span>
+                <p>${goodsDetail.support}</p>
+        </div>
+        <div class="address">
+            <span>配&nbsp;送&nbsp;至</span>
+            <p>${goodsDetail.address}</p>
+        </div>`;
+
+        // 重现渲染rightTop元素
+        rightTop.innerHTML = s
+    }
+
+    // 商品参数数据的动态渲染
+    rightBottomData();
+    function rightBottomData() {
+        // 查找元素对象
+        var chooseWrap = document.querySelector('#wrapper #content .contentMain #center .right .rightBottom .chooseWrap')
+        var crumbData = goodData.goodsDetail.crumbData;
+        // 循环数据
+        for(var i = 0; i < crumbData.length; i ++) {
+            // 创建dl元素对象
+            var dlNode = document.createElement('dl');
+            // 创建dt元素对象
+            var dtNode = document.createElement('dt');
+            dtNode.innerText = crumbData[i].title
+            // 把dt放入dl
+            dlNode.appendChild(dtNode);
+            // 遍历crumbData里面的data
+            for(var j = 0; j < crumbData[i].data.length; j ++ ) {
+                // 创建dd元素
+                var ddNode = document.createElement('dd');
+                ddNode.innerText = crumbData[i].data[j].type
+                // 把dd插入dl
+                dlNode.appendChild(ddNode);
+            }
+            // 把dl放入chooseWrap
+            chooseWrap.appendChild(dlNode);
+        }
     }
 }

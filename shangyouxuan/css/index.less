@@ -1,7 +1,7 @@
 @import 'mixins/clear.less';
 // 最外层的包裹元素
 #wrapper {
-    // 这是头部 
+    // 这是头部
     #header {
         // 上部分
         .headTop {
@@ -168,7 +168,7 @@
                              // 小图片
                              img {
 
-                             } 
+                             }
                              // 蒙版元素
                              .mask {
                                 position: absolute;
@@ -216,13 +216,16 @@
                             }
                         }
                         #piclist {
+                            position: relative;
                             float: left;
                             width: 372px;
                             height: 56px;
                             overflow: hidden;
                             ul {
+                                position: absolute;
                                 white-space: nowrap;
                                 font-size: 0;
+                                transition: 0.5s;
                                 li {
                                     display: inline-block;
                                     width: 50px;
@@ -233,6 +236,149 @@
                                     img {
                                         width: 50px;
                                         height: 50px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                // 右侧商品详情区开始
+                .right{
+                    width: 700px;
+                    float: right;
+                    //商品详情数据结构开始
+                    .rightTop{
+                        h3{
+                            font-size: 14px;
+                            line-height: 21px;
+                            margin-top: 15px;
+                        }
+                        > p{
+                            color:#e12228;
+                            margin-top: 15px;
+                        }
+                        .priceWrap{
+                            margin-top: 10px;
+                            line-height: 28px;
+                            background: #fee9ec;
+                            padding: 7px;
+                            .priceTop{
+                                .clearfix();
+                                //价格
+                                > span{
+                                    margin-right: 15px;
+                                    float: left;
+                                }
+                                //中间
+                                .price{
+                                    float: left;
+                                    color:#cc1122;
+                                    > span{
+                                        font-size: 16px;
+                                        float: left;
+                                    }
+                                    p{
+                                        font-size: 24px;
+                                        float: left;
+                                        font-weight: bold;
+                                    }
+                                    i{
+                                        font-size: 12px;
+                                        color:#cc1122;
+                                        float: left;
+                                    }
+                                }
+                                //累积评价
+                                > p {
+                                    float: right;
+                                    > span{
+
+                                    }
+                                }
+                            }
+                            .priceBottom{
+                                
+                                .clearfix();
+                                //促销
+                                > span{
+                                    float: left;
+                                    margin-right: 15px;
+                                }
+                                //加价购
+                                p {
+                                    width: 520px;
+                                    line-height: 28px;
+                                    float: left;
+                                    > span{
+                                        color: #999;
+                                        //加价购
+                                        &:first-child{
+                                            background: #c81623;
+                                            padding: 3px;
+                                            color:#fff;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                        .support{
+                            margin-top: 10px;
+                            line-height: 28px;
+                            .clearfix();
+                            > span{
+                                margin-right: 15px;
+                                float: left;
+                            }
+                            > p{
+                                float: left;
+                                color:#999;
+                            }
+                        }
+                        .address{
+                            border-bottom: 1px solid #ededed;
+                            padding-bottom: 5px;
+                            line-height: 28px;
+                            margin-top: 10px;
+                            .clearfix();
+                            > span{
+                                margin-right: 15px;
+                                float: left;
+                            }
+                            > p{
+                                float: left;
+                                color:#999;
+                            }
+                        }
+                    }
+                    // 下面
+                    .rightBottom{
+                        margin-top: 10px;
+                        line-height: 28px;
+                        //商品参数的选择区域开始
+                        .chooseWrap{
+                            
+                            dl{
+                                margin-top: 13px;
+                                margin-bottom: 13px;
+                                .clearfix();
+                                dt{
+                                    margin-right: 15px;
+                                    float: left;
+                                }
+                                dd{
+                                    float: left;
+                                    margin-right: 5px;
+                                    color:#666;
+                                    line-height: 24px;
+                                    padding:2px 14px;
+                                    border-top: 1px solid #eee;
+                                    border-left: 1px solid #eee;
+                                    border-right: 1px solid #bbb;
+                                    border-bottom: 1px solid #bbb;
+
+                                    &:first-of-type{
+                                        color:red;
                                     }
                                 }
                             }
