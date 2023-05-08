@@ -13,4 +13,20 @@ var goodData = {
             title : 'ipone 6s系'
         }
     ],
+    imagessrc: [
+        { b: "../images/b1.png", s: "../images/s1.png" },
+        { b: "../images/b2.png", s: "../images/s2.png" },
+        { b: "../images/b3.png", s: "../images/s3.png" },
+        { b: "../images/b1.png", s: "../images/s1.png" },
+        { b: "../images/b2.png", s: "../images/s2.png" },
+        { b: "../images/b3.png", s: "../images/s3.png" },
+        { b: "../images/b1.png", s: "../images/s1.png" },
+        { b: "../images/b2.png", s: "../images/s2.png" },
+        { b: "../images/b3.png", s: "../images/s3.png" },
+        { b: "../images/b1.png", s: "../images/s1.png" },
+        { b: "../images/b2.png", s: "../images/s2.png" },
+        { b: "../images/b3.png", s: "../images/s3.png" },
+        { b: "../images/b1.png", s: "../images/s1.png" },
+        { b: "../images/b2.png", s: "../images/s2.png" }
+    ],
 }
