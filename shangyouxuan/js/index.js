@@ -11,7 +11,7 @@ window.onload = function () {
         var navPath = document.querySelector('#wrapper #content .contentMain #navPath');
         // 2.获取数据
         var path = goodData.path;
-        console.log(path);
+        // console.log(path);
         // 3.遍历数据
         for (var i = 0; i < path.length; i++) {
             if (i === path.length - 1) {
@@ -121,7 +121,7 @@ window.onload = function () {
 
         // 2.获取imagessrc数据
         var imagessrc = goodData.imagessrc;
-        console.log(imagessrc);
+        // console.log(imagessrc);
 
         // 3.遍历数组
         for (var i = 0; i < imagessrc.length; i++) {
@@ -273,6 +273,100 @@ window.onload = function () {
             }
             // 把dl放入chooseWrap
             chooseWrap.appendChild(dlNode);
+        }
+    }
+
+    // 点击商品参数之后的颜色排他效果
+    clickddBind();
+    function clickddBind() {
+        // 获取所有的dl元素,取其中第一个dl元素下的所有dd
+        var dlNodes = document.querySelectorAll('#wrapper #content .contentMain #center .right .rightBottom .chooseWrap dl');
+
+        var arr = new Array(dlNodes.length);
+        arr.fill(0);
+
+        var choose = document.querySelector('#wrapper #content .contentMain #center .right .rightBottom .choose')
+
+        for(var i = 0; i < dlNodes.length; i ++) {
+            (function (i) {
+
+                var ddNodes = dlNodes[i].querySelectorAll('dd')
+            
+                // 循环所有dd元素,触发点击事件
+                for(var j = 0; j < ddNodes.length; j ++) {
+                    ddNodes[j].onclick = function () {
+                        // console.log(this)
+
+                        // 清空choose
+                        choose.innerHTML = '';
+
+                        for(var k = 0; k < ddNodes.length; k ++) {
+                            ddNodes[k].style.color = "#666"
+                        }
+                        this.style.color = "red"
+
+
+                        // 点击哪一个dd元素动态的产生一个新的mark标记元素
+                        arr[i] = this.innerText;
+
+                        // 遍历arr数组,将非0元素的值写入mark标记当中
+                        arr.forEach(function (value, index) {
+                            if(value != 0 ) {
+
+                                // 创建div元素
+                                var markDiv = document.createElement('div');
+                                // 并且设置值
+                                markDiv.innerText = value
+                                // 创建a元素
+                                markDiv.className = 'mark';
+
+                                // 并且设置值
+                                var aNdoe = document.createElement('a');
+                                aNdoe.innerText = 'X';
+
+                                // 并且设置下标
+                                aNdoe.setAttribute('index', index)
+
+                                // 让div追加a
+                                markDiv.appendChild(aNdoe);
+
+                                // 把div放入choose
+                                choose.appendChild(markDiv)
+                            } 
+                        })
+
+                        // 获取所以的a标签元素, 并且循环发生点击事件
+                        var aNodes = document.querySelectorAll('#wrapper #content .contentMain #center .right .rightBottom .choose .mark a');
+
+                        for(var n = 0; n < aNodes.length; n ++) {
+                            aNodes[n].onclick = function () {
+                                // 获取点击a标签身上的index属性值
+                                var idx1 = this.getAttribute('index');
+                                
+                                // 恢复数组中对应下标元素的值
+                                arr[idx1] = 0;
+
+                                // 找到对应下标的那个dl行中的所有dd元素
+                                var ddlist = dlNodes[idx1].querySelectorAll('dd');
+
+                                // 遍历所有的dd元素
+                                for(var m = 0; m < ddlist.length; m ++) {
+                                    // 其余所有dd的文字颜色变为灰色
+                                    ddlist[m].style.color = '#666';
+                                }
+
+                                // 默认的第一个dd文字颜色恢复红色
+                                ddlist[0].style.color = 'red';
+
+                                // 删除mark标记
+                                choose.removeChild(this.parentNode);
+                            }
+                        }
+
+                    }
+                }
+                // 确定实际发生事件的目标对象,然后给其它元素重置为基础元素
+            })(i)
         }
     }
 }
