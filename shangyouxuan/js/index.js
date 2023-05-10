@@ -268,6 +268,7 @@ window.onload = function () {
                 // 创建dd元素
                 var ddNode = document.createElement('dd');
                 ddNode.innerText = crumbData[i].data[j].type
+                ddNode.setAttribute('price', crumbData[i].data[j].changePrice);
                 // 把dd插入dl
                 dlNode.appendChild(ddNode);
             }
@@ -307,7 +308,8 @@ window.onload = function () {
 
 
                         // 点击哪一个dd元素动态的产生一个新的mark标记元素
-                        arr[i] = this.innerText;
+                        arr[i] = this;
+                        changePriceBind(arr);
 
                         // 遍历arr数组,将非0元素的值写入mark标记当中
                         arr.forEach(function (value, index) {
@@ -316,7 +318,7 @@ window.onload = function () {
                                 // 创建div元素
                                 var markDiv = document.createElement('div');
                                 // 并且设置值
-                                markDiv.innerText = value
+                                markDiv.innerText = value.innerText;
                                 // 创建a元素
                                 markDiv.className = 'mark';
 
@@ -360,6 +362,9 @@ window.onload = function () {
 
                                 // 删除mark标记
                                 choose.removeChild(this.parentNode);
+
+                                // 调用价格函数
+                                changePriceBind(arr);
                             }
                         }
 
@@ -368,5 +373,26 @@ window.onload = function () {
                 // 确定实际发生事件的目标对象,然后给其它元素重置为基础元素
             })(i)
         }
+    }
+
+    // 价格变动的函数声明
+    function changePriceBind (arr) {
+        // 获取价格的标签元素
+        var oldPrice = document.querySelector('#wrapper #content .contentMain #center .right .rightTop .priceWrap .priceTop .price p');
+
+        // 给每个dd标签身上都默认设置一个自定义属性, 用来记录变化的价格
+
+        // 取出默认价格
+        var price = goodData.goodsDetail.price;
+
+        // 遍历arr数组
+        for(var i = 0; i < arr.length; i ++ ) {
+            if(arr[i]) {
+               var changeprice = Number(arr[i].getAttribute('price'));
+               // 最终价格
+               price += changeprice;
+            }
+        }
+        oldPrice.innerText = price;
     }
 }
