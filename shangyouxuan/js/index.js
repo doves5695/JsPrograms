@@ -394,5 +394,114 @@ window.onload = function () {
             }
         }
         oldPrice.innerText = price;
+
+        // 将变化后价格写入左侧标签
+        var leftprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .left p');
+
+        leftprice.innerText = '¥' + price; 
+
+        // 遍历选择搭配中所有的复选框,看是否有选中的
+        var ipts = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .middle li input');
+
+        for(var j = 0; j < ipts.length; j ++) {
+            if(ipts[j].checked) {
+                price += Number(ipts[j].value);
+            }
+        }
+
+        // 右侧套餐价重新渲染
+        var newpirce = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .right i');
+        
+        newpirce.innerText = '¥' + price;
+    }
+
+    // 选择搭配中间区域复选框选中套餐价变动效果
+    chooseprice();
+    function chooseprice() {
+        // 先获取复选框元素
+        var ipts = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .middle li input');
+        var leftprice = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .left p');
+        var newpirce = document.querySelector('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .chooseBox .listWrap .right i');
+        // 遍历这些复选框
+        for(var i = 0; i < ipts.length; i ++) {
+            ipts[i].onclick = function () {
+                var oldprice = Number(leftprice.innerText.slice(1));
+                for(var j = 0; j < ipts.length; j ++) {
+                    if(ipts[j].checked) {
+                        // 新价格 = 左侧价格 + 复选框价格
+                        oldprice = oldprice + Number(ipts[j].value);
+                    }
+                }
+
+                // 重新写回到套餐价标签
+                newpirce.innerText = '¥' + oldprice;
+            }
+        }
+    }
+
+    // 封装一个公共的选项卡函数
+    function Tab(tabBtns, tabConts) {
+        for(var i = 0; i < tabBtns.length; i ++) {
+            tabBtns[i].index = i;
+            tabBtns[i].onclick = function () {
+                for(var j = 0; j < tabBtns.length; j ++) {
+                    tabBtns[j].className = '';
+                    tabConts[j].className = '';
+                }
+                this.className = 'active';
+                tabConts[this.index].className = 'active';
+            }
+        }
+    }
+
+    // 点击左侧选项卡
+    leftTab();
+    function leftTab () {
+        // 被点击的元素
+        var h4s = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .leftAside .asideTop h4');
+        // 被切换显示的元素
+        var divs = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .leftAside .aslideContent>div');
+        // 调用函数
+        Tab(h4s, divs);
+    }
+
+    // 点击右侧选项卡
+    rightTab();
+    function rightTab () {
+        // 被点击的元素
+        var lis = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .BottomDetail .tabBtns li');
+        // 被切换显示的元素
+        var divs = document.querySelectorAll('#wrapper #content .contentMain .goodsDetailWrap .rightDetail .BottomDetail .tabContents div');
+        // 调用函数
+        Tab(lis, divs);
+    }
+
+    // 右边侧边栏的点击效果
+    rightAsideBind();
+    function rightAsideBind() {
+        // 找到按钮元素
+        var btns = document.querySelector('#wrapper .rightAside .btns');
+
+        // 记录初始状态
+        var flag = true;
+
+        // 查找侧边栏元素
+        var rightAside = document.querySelector('#wrapper .rightAside');
+
+        // 发生点击事件
+        btns.onclick = function () {
+            // 判断
+            if(flag) {
+                // 展开
+                btns.className = 'btns btnsOpen';
+                rightAside.className = 'rightAside asideOpen';
+            } else {
+                // 关闭
+                btns.className = 'btns btnsClose';
+                rightAside.className = 'rightAside asideClose';
+            }
+
+            flag = !flag;
+        }
     }
 }
